@@ -1,0 +1,27 @@
+#  $(call cmd, cc_o_c)              
+quiet_cmd_cc_o_c = CC $(subst ../, ,$<)
+cmd_cc_o_c = $(CC) $(COPTS)   -c $< -o $@
+cmd = @echo  " $(quiet_cmd_cc_o_c)"; $(cmd_cc_o_c)
+
+#      Add "$(call cmd_d, cc_o_d)" to  XXXX.mk to produce OBJ/XXX.o.d 
+#      to get include file dependency relation
+quiet_cmd_d_cc_o_d = CM $(subst ../, ,$<)
+cmd_d_cc_o_d = $(CC) $(COPTS) -M  $< > $@.d
+cmd_d = @echo  " $(quiet_cmd_d_cc_o_d)"; $(cmd_d_cc_o_d)
+
+#      Add "$(call cmd_ar_target)" 
+quiet_cmd_ar_target = AR      $@
+cmd_ar_target = @echo " $(quiet_cmd_ar_target)"; \
+                rm -f $@ 2>/dev/null; \
+                $(AR) -r $@ $(LIB_OBJ_FILES) ; \
+				echo "-----------------------------------------------------"; \
+				echo "FINISHED CREATING $@ LIBRARY"
+
+#      Add "$(call cmd_clean)" 
+clean-files	:=  $(OBJ_DIR)/*.* \
+                $(LIB_DIR)/*.a \
+                $(TARGET)
+
+quiet_cmd_clean    = CLEAN   $(clean-files)
+      cmd_clean    = @echo " $(quiet_cmd_clean) "; \
+                      rm -f $(clean-files) 2>/dev/null

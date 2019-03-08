@@ -71,6 +71,13 @@ define int8_t uint8_t int16_t uint16_t int32_t uint32_t int64_t uint64_t
 #define offsetof(t, m) ((size_t) &((t *)0)->m)
 #endif
 
+#define USG_MAX(a, b) \
+	({ \
+		typeof (a) _a = (a); \
+		typeof (b) _b = (b); \
+		_a > _b ? _a : _b; \
+	})
+
 #define USG_ALIGN_FLOOR(val, align) \
 	(typeof(val))((val) & (~((typeof(val))((align) - 1))))
 

@@ -55,19 +55,22 @@ USG_LIB = $(USG_TARGET_DIR)/lib/libusg.a
 COVERAGE=$(COPTS) $(LDFLAGS) -o $@ -Wl,--whole-archive $(USG_LIB) -Wl,--no-whole-archive
 
 BINS = \
-	$(USG_TEST_DIR)/bin_test_usg_atomic \
-	$(USG_TEST_DIR)/bin_test_usg_spinlock \
-	$(USG_TEST_DIR)/bin_test_usg_rwlock \
+	$(USG_TEST_DIR)/bin_test_atomic \
+	$(USG_TEST_DIR)/bin_test_spinlock \
+	$(USG_TEST_DIR)/bin_test_rwlock \
+	$(USG_TEST_DIR)/bin_test_ring \
 	$(USG_TEST_DIR)/bin_test_count
 
 all: $(BINS)
 
-$(USG_TEST_DIR)/bin_test_usg_atomic: $(UPU_LIB)
-				$(QUIET)$(CC) $(USG_TEST_DIR)/test_usg_atomic.c $(COVERAGE)
-$(USG_TEST_DIR)/bin_test_usg_spinlock: $(UPU_LIB)
-				$(QUIET)$(CC) $(USG_TEST_DIR)/test_usg_spinlock.c $(COVERAGE)
-$(USG_TEST_DIR)/bin_test_usg_rwlock: $(UPU_LIB)
-				$(QUIET)$(CC) $(USG_TEST_DIR)/test_usg_rwlock.c $(COVERAGE)
+$(USG_TEST_DIR)/bin_test_atomic: $(UPU_LIB)
+				$(QUIET)$(CC) $(USG_TEST_DIR)/test_atomic.c $(COVERAGE)
+$(USG_TEST_DIR)/bin_test_spinlock: $(UPU_LIB)
+				$(QUIET)$(CC) $(USG_TEST_DIR)/test_spinlock.c $(COVERAGE)
+$(USG_TEST_DIR)/bin_test_rwlock: $(UPU_LIB)
+				$(QUIET)$(CC) $(USG_TEST_DIR)/test_rwlock.c $(COVERAGE)
+$(USG_TEST_DIR)/bin_test_ring: $(UPU_LIB)
+				$(QUIET)$(CC) $(USG_TEST_DIR)/test_ring.c $(COVERAGE)
 $(USG_TEST_DIR)/bin_test_count: $(UPU_LIB)
 				$(QUIET)$(CC) $(USG_TEST_DIR)/test_count.c $(COVERAGE)
 

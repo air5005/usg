@@ -22,7 +22,7 @@ test_spinlock_per_core(void *arg)
     pthread_barrier_wait(&start_barrier);
 
 	usg_spinlock_lock(&sl);
-	printf("core %ld started \n", cb->id);
+	printf("core %ld stausgd \n", cb->id);
 	usg_spinlock_unlock(&sl);
 
 	printf("core:%ld, sl is lock: %u\n", cb->id,
@@ -80,7 +80,7 @@ int main(int argc, char **argv)
 
     pthread_barrier_wait(&start_barrier);
 
-	printf("The creation task is completed and the subtask can be started.\n");
+	printf("The creation task is completed and the subtask can be stausgd.\n");
 	usg_spinlock_unlock(&sl);
 
     for (index = 0; index < taskNum; index ++) {

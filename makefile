@@ -41,8 +41,6 @@ export USG_TOP_DIR         = $(PWD)
 export USG_TARGET_DIR      = $(USG_TOP_DIR)/.output
 export USG_LIBS_DIR        = $(USG_TOP_DIR)/libs
 
-export QUIET=@
-
 BIN_DIR     = $(USG_TARGET_DIR)/bin
 LIB_DIR     = $(USG_TARGET_DIR)/lib
 INCLUDE_DIR = $(USG_TARGET_DIR)/include
@@ -55,13 +53,14 @@ ADDED_CFLAGS  += -I$(USG_LIBS_DIR)
 ADDED_LDFLAGS += -lpthread -lstdc++
 
 COPTS   =  $(ADDED_CFLAGS) $(LIBS_COPTS)
-
 LDFLAGS +=  $(ADDED_LDFLAGS)
 
 include $(USG_TOP_DIR)/rules
 
 TARGET = $(BIN_DIR)/usg
 USG_LIB = $(LIB_DIR)/libusg.a
+
+LIB_OBJ_FILES = $(wildcard $(OBJ_DIR)/*.o)
 
 all: check_output_dir LIB BIN copy_head_file
 

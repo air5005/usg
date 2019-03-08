@@ -27,15 +27,6 @@ usg_combine32ms1b(register uint32_t x)
 	return x;
 }
 
-/**
- * Aligns input parameter to the next power of 2
- *
- * @param x
- *   The integer value to algin
- *
- * @return
- *   Input parameter aligned to the next power of 2
- */
 static inline uint32_t
 usg_align32pow2(uint32_t x)
 {
@@ -52,7 +43,6 @@ usg_align32pow2(uint32_t x)
 	return x + 1;
 }
 
-/* return the size of memory occupied by a ring */
 ssize_t
 usg_ring_get_memsize(unsigned count)
 {
@@ -69,8 +59,7 @@ usg_ring_get_memsize(unsigned count)
 }
 
 int
-usg_ring_init(struct usg_ring *r, const char *name, unsigned count,
-	unsigned flags)
+usg_ring_init(struct usg_ring *r, unsigned count, unsigned flags)
 {
 	/* compilation-time checks */
 	USG_BUILD_BUG_ON((sizeof(struct usg_ring) &
@@ -107,8 +96,7 @@ usg_ring_init(struct usg_ring *r, const char *name, unsigned count,
 
 /* create the ring */
 struct usg_ring *
-usg_ring_create(const char *name, unsigned count, int socket_id,
-		unsigned flags)
+usg_ring_create(unsigned count, unsigned flags)
 {
 	struct usg_ring *r;
 	ssize_t ring_size;

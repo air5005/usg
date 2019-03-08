@@ -62,6 +62,37 @@ define int8_t uint8_t int16_t uint16_t int32_t uint32_t int64_t uint64_t
 #define unlikely(x)	__builtin_expect(!!(x), 0)
 #endif
 
+/* true if x is a power of 2 */
+#ifndef POWEROF2
+#define POWEROF2(x) ((((x)-1) & (x)) == 0)
+#endif
+
+#ifndef offsetof
+#define offsetof(t, m) ((size_t) &((t *)0)->m)
+#endif
+
+#define USG_ALIGN_FLOOR(val, align) \
+	(typeof(val))((val) & (~((typeof(val))((align) - 1))))
+
+#define USG_ALIGN(val, align) \
+    USG_ALIGN_FLOOR(((val) + ((typeof(val)) (align) - 1)), align)
+
+#define MPLOCKED  "lock ; "
+#define	usg_mb()  _mm_mfence()
+#define	usg_wmb() _mm_sfence()
+#define	usg_rmb() _mm_lfence()
+
+#define __usg_aligned(a) __attribute__((__aligned__(a)))
+#define USG_CACHE_LINE_SIZE 64
+#define __usg_cache_aligned __usg_aligned(USG_CACHE_LINE_SIZE)
+#define __usg_cache_min_aligned __usg_aligned(USG_CACHE_LINE_SIZE)
+#define USG_CACHE_LINE_MASK (USG_CACHE_LINE_SIZE-1) /**< Cache line mask. */
+
+/**
+ * Triggers an error at compilation time if the condition is true.
+ */
+#define USG_BUILD_BUG_ON(condition) ((void)sizeof(char[1 - 2*!!(condition)]))
+
 #ifdef __cplusplus
 }
 #endif

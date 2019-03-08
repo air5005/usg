@@ -1,10 +1,9 @@
 #ifndef _USG_ATOMIC_H_
 #define _USG_ATOMIC_H_
 
-#include <emmintrin.h>
-
-//#define MPLOCKED                    /**< No need to insert MP lock prefix. */
-#define MPLOCKED        "lock ; "   /**< Insert MP lock prefix. */
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /*------------------------- 16 bit atomic operations -------------------------*/
 /**
@@ -680,6 +679,10 @@ static inline void usg_atomic64_clear(usg_atomic64_t *v)
 {
 	v->cnt = 0;
 }
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _USG_ATOMIC_H_ */
 

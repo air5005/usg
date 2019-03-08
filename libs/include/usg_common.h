@@ -17,6 +17,11 @@ extern "C" {
 #include <pthread.h>
 #include <arpa/inet.h>
 #include <sys/mman.h>
+#include <stdarg.h>
+#include <stdint.h>
+#include <inttypes.h>
+#include <errno.h>
+#include <emmintrin.h>
 
 #include "usg_typedef.h"
 #include "usg_atomic.h"

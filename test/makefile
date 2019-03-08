@@ -1,8 +1,3 @@
-#####################################################################
-# FILE NAME: makefile                                               #
-#   PURPOSE: makefile                                               #
-#####################################################################
-
 ########################################################
 # 1. Set envirnment micro                              #
 ########################################################
@@ -37,64 +32,46 @@ ADDED_CFLAGS  += -Wvolatile-register-var
 ########################################################
 # 2. Set compiling path                                #
 ########################################################
-export USG_TOP_DIR         = $(PWD)
+export USG_TOP_DIR         = $(PWD)/../
 export USG_TARGET_DIR      = $(USG_TOP_DIR)/.output
 export USG_LIBS_DIR        = $(USG_TOP_DIR)/libs
+export USG_TEST_DIR        = $(USG_TOP_DIR)/test
 
 export QUIET=@
-
-BIN_DIR     = $(USG_TARGET_DIR)/bin
-LIB_DIR     = $(USG_TARGET_DIR)/lib
-INCLUDE_DIR = $(USG_TARGET_DIR)/include
-OBJ_DIR     = $(USG_TARGET_DIR)/obj
-OBJ_SUFFIX  = o
 
 ADDED_CFLAGS  += -g
 ADDED_CFLAGS  += -I$(USG_TOP_DIR)
 ADDED_CFLAGS  += -I$(USG_LIBS_DIR)
 ADDED_LDFLAGS += -lpthread -lstdc++
 
-COPTS   =  $(ADDED_CFLAGS) $(LIBS_COPTS)
-
+COPTS   =  $(ADDED_CFLAGS)
+COPTS  += -I$(USG_TARGET_DIR)/include/
 LDFLAGS +=  $(ADDED_LDFLAGS)
 
 include $(USG_TOP_DIR)/rules
 
-TARGET = $(BIN_DIR)/usg
-USG_LIB = $(LIB_DIR)/libusg.a
+USG_LIB = $(USG_TARGET_DIR)/lib/libusg.a
 
-all: check_output_dir LIB BIN copy_head_file
+COVERAGE=$(COPTS) $(LDFLAGS) -o $@ -Wl,--whole-archive $(USG_LIB) -Wl,--no-whole-archive
 
-LIB: $(USG_LIB)
+BINS = \
+	$(USG_TEST_DIR)/bin_test_usg_atomic \
+	$(USG_TEST_DIR)/bin_test_usg_spinlock \
+	$(USG_TEST_DIR)/bin_test_usg_rwlock \
+	$(USG_TEST_DIR)/bin_test_count
 
-BIN: $(TARGET)
+all: $(BINS)
 
-$(USG_LIB): TARGET_LIBS
-			$(call cmd_ar_target)
+$(USG_TEST_DIR)/bin_test_usg_atomic: $(UPU_LIB)
+				$(QUIET)$(CC) $(USG_TEST_DIR)/test_usg_atomic.c $(COVERAGE)
+$(USG_TEST_DIR)/bin_test_usg_spinlock: $(UPU_LIB)
+				$(QUIET)$(CC) $(USG_TEST_DIR)/test_usg_spinlock.c $(COVERAGE)
+$(USG_TEST_DIR)/bin_test_usg_rwlock: $(UPU_LIB)
+				$(QUIET)$(CC) $(USG_TEST_DIR)/test_usg_rwlock.c $(COVERAGE)
+$(USG_TEST_DIR)/bin_test_count: $(UPU_LIB)
+				$(QUIET)$(CC) $(USG_TEST_DIR)/test_count.c $(COVERAGE)
 
-$(TARGET): $(OBJ_DIR)/main.obj $(USG_LIB)
-				@echo " LD   $@"
-				$(CC) $(OBJ_DIR)/main.obj $(COPTS) $(LDFLAGS) -o $@ -Wl,--whole-archive $(USG_LIB) -Wl,--no-whole-archive
-				echo "FINISHED CREATING $(TARGET)"
-				@echo "-----------------------------------------------------"
-
-$(OBJ_DIR)/main.obj: $(USG_TOP_DIR)/main.c
-	$(call cmd, cc_o_c)
-
-include $(USG_LIBS_DIR)/libs.mk
-
-clean-files	:=  $(OBJ_DIR)/*.* \
-                $(LIB_DIR)/*.*  \
-                $(INCLUDE_DIR)/*.h  \
-                $(BIN_DIR)/*  
+clean-files	:=  $(USG_TEST_DIR)/*.obj $(BINS)
 
 clean:
-	rm -f $(clean-files) > /dev/null
-
-copy_head_file:
-	@find $(USG_LIBS_DIR) -name "*.h" |xargs -i cp {} $(INCLUDE_DIR) > /dev/null
-
-check_output_dir:
-	mkdir -p $(BIN_DIR) $(LIB_DIR) $(INCLUDE_DIR) $(OBJ_DIR) > /dev/null 
-	
-.PHONY: all clean copy_head_file
+	@rm -f $(clean-files) >/dev/null

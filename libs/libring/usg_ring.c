@@ -100,6 +100,7 @@ usg_ring_create(unsigned count, unsigned flags)
 {
 	struct usg_ring *r;
 	ssize_t ring_size;
+	const unsigned int requested_count = count;
 
     /* 判断flags表示是否设置了RING_F_EXACT_SZ, RING_F_EXACT_SZ的话，内部会
        把count做一个调整，调整为2的指数次方，否则要求外面带进来的count本身就是
@@ -124,8 +125,10 @@ usg_ring_create(unsigned count, unsigned flags)
 	if (r == NULL) {
 		return NULL;
 	}
-
     memset(r, 0, ring_size);
+
+    usg_ring_init(r, requested_count, flags);
+
 	return r;
 }
 

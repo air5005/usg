@@ -638,11 +638,12 @@ test_ring_basic_ex(void)
 	struct usg_ring *rp = NULL;
 	void **obj = NULL;
 
-	obj = calloc(RING_SIZE, sizeof(void *));
+	obj = malloc(RING_SIZE * sizeof(void *));
 	if (obj == NULL) {
 		printf("test_ring_basic_ex fail to malloc\n");
 		goto fail_test;
 	}
+    memset(obj, 0, RING_SIZE * sizeof(void *));
 
 	rp = usg_ring_create(RING_SIZE, RING_F_SP_ENQ | RING_F_SC_DEQ);
 	if (rp == NULL) {

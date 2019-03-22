@@ -5,13 +5,15 @@ int main(int argc, char **argv)
     uint64_t *arry;
     uint64_t  arrylen;
     uint64_t  index;
+    uint64_t  type;
 
-	if (argc < 2) {
+	if (argc < 3) {
         printf("Incorrect input parameters\r\n");
         return -1;
 	}
+    type = atoi(argv[1]);
 
-    arrylen = argc - 1;
+    arrylen = argc - 2;
     arry = malloc(sizeof(uint64_t) * arrylen);
     if (arry == NULL) {
         printf("malloc fail\r\n");
@@ -26,7 +28,14 @@ int main(int argc, char **argv)
         printf("arry[%ld]:%ld \r\n", index, arry[index]);
     }
 
-    bubble_sort_u64(arry, arrylen, NULL);
+    switch (type) {
+        case 0:
+            bubble_sort_u64(arry, arrylen, NULL);
+        break;
+
+        default:
+        break;
+    }
 
     for (index = 0; index < arrylen; index ++) {
         printf("arry[%ld]:%ld \r\n", index, arry[index]);

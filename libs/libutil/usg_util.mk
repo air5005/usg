@@ -1,27 +1,20 @@
 ####################################################################
-# FILE NAME: usg_algo.mk                                           #
+# FILE NAME: usg_util.mk                                           #
 ####################################################################
 PRIVATE_INC_FILE   = \
 		     makefile\
-		     $(LIBALGO_DIR)/bubble_sort.h \
-		     $(LIBALGO_DIR)/quick_sort.h \
-         $(LIBALGO_DIR)/usg_algo.mk
+		     $(LIBUTIL_DIR)/usg_util.h \
+         $(LIBUTIL_DIR)/usg_util.mk
 
-T_LIBALGO = \
-	  $(OBJ_DIR)/bubble_sort.o \
-	  $(OBJ_DIR)/quick_sort.o 
+T_LIBUTIL = \
+	  $(OBJ_DIR)/usg_util.o 
 
 ####################################################################
 #                    COMPILE RULES                                 #
 ####################################################################
 
-$(OBJ_DIR)/bubble_sort.o: \
-    $(LIBALGO_DIR)/bubble_sort.c \
-	$(PRIVATE_INC_FILE)
-	$(call cmd, cc_o_c)
-
-$(OBJ_DIR)/quick_sort.o: \
-    $(LIBALGO_DIR)/quick_sort.c \
+$(OBJ_DIR)/usg_util.o: \
+    $(LIBUTIL_DIR)/usg_util.c \
 	$(PRIVATE_INC_FILE)
 	$(call cmd, cc_o_c)
  

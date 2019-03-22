@@ -59,7 +59,7 @@ BINS = \
 	$(USG_TEST_DIR)/bin_spinlock \
 	$(USG_TEST_DIR)/bin_rwlock \
 	$(USG_TEST_DIR)/bin_ring \
-	$(USG_TEST_DIR)/bin_bubble_sort \
+	$(USG_TEST_DIR)/bin_sort \
 	$(USG_TEST_DIR)/bin_count
 
 all: $(BINS)
@@ -74,8 +74,8 @@ $(USG_TEST_DIR)/bin_ring: $(UPU_LIB)
 				$(QUIET)$(CC) $(USG_TEST_DIR)/test_ring.c $(COVERAGE)
 $(USG_TEST_DIR)/bin_count: $(UPU_LIB)
 				$(QUIET)$(CC) $(USG_TEST_DIR)/test_count.c $(COVERAGE)
-$(USG_TEST_DIR)/bin_bubble_sort: $(UPU_LIB)
-				$(QUIET)$(CC) $(USG_TEST_DIR)/test_bubble_sort.c $(COVERAGE)
+$(USG_TEST_DIR)/bin_sort: $(UPU_LIB)
+				$(QUIET)$(CC) $(USG_TEST_DIR)/test_sort.c $(COVERAGE)
 
 clean-files	:=  $(USG_TEST_DIR)/*.obj $(BINS)
 

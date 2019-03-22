@@ -24,6 +24,7 @@ extern "C" {
 #include <emmintrin.h>
 
 #include "usg_typedef.h"
+#include "usg_util.h"
 #include "usg_atomic.h"
 #include "usg_spinlock.h"
 #include "usg_rwlock.h"
@@ -32,6 +33,7 @@ extern "C" {
 #include "usg_ring.h"
 
 #include "bubble_sort.h"
+#include "quick_sort.h"
 
 #ifdef __cplusplus
 }

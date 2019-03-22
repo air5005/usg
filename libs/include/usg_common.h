@@ -31,6 +31,8 @@ extern "C" {
 #include "usg_lock.h"
 #include "usg_ring.h"
 
+#include "bubble_sort.h"
+
 #ifdef __cplusplus
 }
 #endif

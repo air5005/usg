@@ -55,24 +55,27 @@ USG_LIB = $(USG_TARGET_DIR)/lib/libusg.a
 COVERAGE=$(COPTS) $(LDFLAGS) -o $@ -Wl,--whole-archive $(USG_LIB) -Wl,--no-whole-archive
 
 BINS = \
-	$(USG_TEST_DIR)/bin_test_atomic \
-	$(USG_TEST_DIR)/bin_test_spinlock \
-	$(USG_TEST_DIR)/bin_test_rwlock \
-	$(USG_TEST_DIR)/bin_test_ring \
-	$(USG_TEST_DIR)/bin_test_count
+	$(USG_TEST_DIR)/bin_atomic \
+	$(USG_TEST_DIR)/bin_spinlock \
+	$(USG_TEST_DIR)/bin_rwlock \
+	$(USG_TEST_DIR)/bin_ring \
+	$(USG_TEST_DIR)/bin_bubble_sort \
+	$(USG_TEST_DIR)/bin_count
 
 all: $(BINS)
 
-$(USG_TEST_DIR)/bin_test_atomic: $(UPU_LIB)
+$(USG_TEST_DIR)/bin_atomic: $(UPU_LIB)
 				$(QUIET)$(CC) $(USG_TEST_DIR)/test_atomic.c $(COVERAGE)
-$(USG_TEST_DIR)/bin_test_spinlock: $(UPU_LIB)
+$(USG_TEST_DIR)/bin_spinlock: $(UPU_LIB)
 				$(QUIET)$(CC) $(USG_TEST_DIR)/test_spinlock.c $(COVERAGE)
-$(USG_TEST_DIR)/bin_test_rwlock: $(UPU_LIB)
+$(USG_TEST_DIR)/bin_rwlock: $(UPU_LIB)
 				$(QUIET)$(CC) $(USG_TEST_DIR)/test_rwlock.c $(COVERAGE)
-$(USG_TEST_DIR)/bin_test_ring: $(UPU_LIB)
+$(USG_TEST_DIR)/bin_ring: $(UPU_LIB)
 				$(QUIET)$(CC) $(USG_TEST_DIR)/test_ring.c $(COVERAGE)
-$(USG_TEST_DIR)/bin_test_count: $(UPU_LIB)
+$(USG_TEST_DIR)/bin_count: $(UPU_LIB)
 				$(QUIET)$(CC) $(USG_TEST_DIR)/test_count.c $(COVERAGE)
+$(USG_TEST_DIR)/bin_bubble_sort: $(UPU_LIB)
+				$(QUIET)$(CC) $(USG_TEST_DIR)/test_bubble_sort.c $(COVERAGE)
 
 clean-files	:=  $(USG_TEST_DIR)/*.obj $(BINS)
 
